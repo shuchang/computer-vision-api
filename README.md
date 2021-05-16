@@ -16,3 +16,4 @@ This is a repo for creating computer vision examples
 [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition.html#Rekognition.Client.detect_labels)
 
 ### Method three:
+![CLI](https://github.com/shuchang/computer-vision-api/blob/main/images/cli.png)
