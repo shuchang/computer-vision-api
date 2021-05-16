@@ -1,14 +1,32 @@
+#!/usr/bin/env python3
+
 import boto3
+import click
 
-client = boto3.client('rekognition')
 
-response = client.detect_labels(
-    Image={
-        'S3Object': {
-            'Bucket': 'learn-computer-vision-api',
-            'Name': 'flowers.JPG',
+@click.command(help='This tool does label detection')
+@click.option('--file', prompt='I need the name of the file in the bucket', 
+                help='This is the name of the file in the bucket')
+
+def detect(file):
+    client = boto3.client('rekognition')
+
+    response = client.detect_labels(
+        Image={
+            'S3Object': {
+                'Bucket': 'learn-computer-vision-api',
+                'Name': file,
+                },
             },
-        },
-    )
+        )
+    click.echo(click.style(f"Detecting Labels for: {file}", fg="red"))
+    labels = response["Labels"]
+    for label in labels:
+        name = label['Name']
+        confidence = label['Confidence']
+        click.echo(click.style(f"{name}: {confidence}", fg="green"))
 
-print(response)
+
+if __name__ == "__main__":
+    #pylint: disable=E1120
+    detect()
